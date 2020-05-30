@@ -1,17 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Data;
+using TheGlobeServer.Extensions;
+using AutoMapper;
+using Implementations.Repositories;
+using Contracts;
 
-namespace TheGlobe
+namespace TheGlobeServer
 {
 	public class Startup
 	{
@@ -25,7 +24,19 @@ namespace TheGlobe
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddDbContext<DatabaseContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:TheGlobeTest"]));
+			// This line is for testing with no database.
+			//services.AddDbContext<DatabaseContext>(opt => opt.UseInMemoryDatabase("TheGlobeTest"));
+
+
+			services.AddScoped<IRepository, Repository>();
+
+
+
+			services.RegisterServices();
 			services.AddControllers();
+			services.AddAutoMapper(typeof(Startup));
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
