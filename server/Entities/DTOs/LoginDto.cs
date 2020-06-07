@@ -18,6 +18,6 @@ namespace Data.DTOs
 		public bool IsSuccess { get; set; }
 		public string Username { get; set; }
 		public DateTime LoginDate { get; set; }
-		public string AuthToken { get; set; }
+		public string Token { get; set; }
 	}
 }
