@@ -5,9 +5,11 @@ using System;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Common.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TheGlobeServer.Controllers
 {
+	[Authorize]
 	[Route("api/[controller]")]
 	public class LoginController : ControllerBase
 	{
@@ -18,6 +20,7 @@ namespace TheGlobeServer.Controllers
 		}
 
 
+		[AllowAnonymous]
 		[HttpPost]
 		public async Task<ActionResult<LoginResponseDto>> Login([FromBody]LoginRequestDto loginRequest)
 		{
