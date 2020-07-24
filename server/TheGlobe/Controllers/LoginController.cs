@@ -37,7 +37,7 @@ namespace TheGlobeServer.Controllers
 
 
 
-
+		[AllowAnonymous]
 		[HttpPost("signup")]
 		public async Task<ActionResult> SignUp([FromBody] SignUpRequestDto signUpRequest)
 		{
