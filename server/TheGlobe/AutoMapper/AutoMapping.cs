@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-
+using Data.DTOs;
+using Data.Models;
 
 namespace TheGlobeServer.AutoMapper
 {
@@ -11,7 +12,12 @@ namespace TheGlobeServer.AutoMapper
     {
         public AutoMapping()
         {
-            //CreateMap<User, UserDTO>(); // means you want to map from User to UserDTO
+            CreateMap<AppUser, AppUserDto>(); 
+            CreateMap<Book, BookDto>();
+            CreateMap<BookTag, BookTagDto>();
+            CreateMap<Chapter, ChapterDto>();
+            CreateMap<Tag, TagDto>();
+
         }
     }
 }
