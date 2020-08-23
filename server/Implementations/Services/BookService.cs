@@ -32,7 +32,7 @@ namespace Implementations.Services
 
 		public async Task<BookDto> Get(int id)
 		{
-
+			return null;
 		}
 
 

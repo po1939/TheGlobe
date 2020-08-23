@@ -13,8 +13,7 @@ namespace Data.Models
 		[StringLength(30,ErrorMessage = "Username cannot be longer than 30 characters.")]
 		public string Username { get; set; }
 
-		[Required(ErrorMessage = "Password is required.")]
-		[StringLength(30, ErrorMessage = "Password cannot be longer than 30 characters.")]
+		public string Salt { get; set; }
 		public string Password { get; set; }
 		public string Email { get; set; }
 		public bool IsAdmin { get; set; }

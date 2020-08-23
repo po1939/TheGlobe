@@ -27,8 +27,10 @@ namespace Implementations.Services
 
 		public LoginResponseDto Login(LoginRequestDto loginRequest)
 		{
-			var user = _repository.Get<AppUser>(x => x.Username == loginRequest.Username && x.Password == loginRequest.Password);
-			if (user != null)
+			var user = _repository.Get<AppUser>(x => x.Username == loginRequest.Username);
+
+			// record exists and hash validate passes
+			if (user != null && PasswordHasher.Validate(loginRequest.Password, user.Salt, user.Password))
 			{
 				var token = generateJwtToken(user);
 				return new LoginResponseDto
@@ -53,12 +55,16 @@ namespace Implementations.Services
 			var user = _repository.Get<AppUser>(x => x.Username == signUpRequest.Username || x.Email == signUpRequest.Email);
 			if (user == null)
 			{
+				string salt = PasswordHasher.CreateSalt();
+				string hash = PasswordHasher.CreateHashedPassword(signUpRequest.Password, salt);
+
 				_repository.Insert<AppUser>(
 					new AppUser
 					{
 						Email = signUpRequest.Email,
 						Username = signUpRequest.Username,
-						Password = signUpRequest.Password
+						Salt = salt,
+						Password = hash
 					});
 				_repository.SaveChanges();
 				return true;
